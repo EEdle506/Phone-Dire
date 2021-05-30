@@ -88,11 +88,15 @@ void Dire::SwitchLanguage(short choise, bool check_state) {
     }
     else {
         if (arr_settings[5] != choise) {    //lang_state
+
             ChangeColour(LightGreen);
+
             if (choise < 4) {
-           
+
                 arr_settings[4] = arr_settings[5] = choise;
+
                 SaveUserSettings();
+
                 switch (choise) {
                 case 1:
                     str_temp_database.assign("Languages/russian.bin");
@@ -109,20 +113,23 @@ void Dire::SwitchLanguage(short choise, bool check_state) {
                 ifstream lang(str_temp_database, ios::binary);
                 
                 Language.clear();
+
                 str_temp_database.clear();
+
                 lang.read((char*)&size_vec, sizeof(size_vec));
                 for (size_t i = 0; i < size_vec; i++) {
                     str_temp_database = GetImport_string(lang, str_temp_database);
                     Language.push_back(str_temp_database);
                 }
+
                 lang.close();
-                printloadbar(63);
+
                 system("cls");
                 cout << Language[13];
                 Sleep(arr_settings[0]);
             }
             else {
-                printloadbar(63);
+   
                 system("cls");
                 ChangeColour(Yellow);
                 cout << Language[2];
@@ -130,12 +137,13 @@ void Dire::SwitchLanguage(short choise, bool check_state) {
             }
         }
         else {
-            printloadbar(63);
+
             system("cls");
             ChangeColour(Yellow);
             cout << Language[64];
             Sleep(arr_settings[0]);
         }
+        printloadbar(63);
     }
 }
 
