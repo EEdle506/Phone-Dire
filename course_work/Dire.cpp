@@ -237,20 +237,24 @@ bool Dire::UserDireCorrect(const string& name, int choise) {
             if (element.nick == name) {
                 cout << Language[7];
                 Sleep(arr_settings[0]);
+
                 return false;
             }
         }
         if (name.size() < 2) {
             cout << Language[8];
             Sleep(arr_settings[0]);
+
             return false;
         }
         else if (name.size() > 16) {
             cout << Language[9];
             Sleep(arr_settings[0]);
+
             return false;
         }
         ChangeColour(White);
+
         return true;
 
     case 2: //phone
@@ -259,21 +263,25 @@ bool Dire::UserDireCorrect(const string& name, int choise) {
             if (64 < (int)name[i] && 123 > (int)name[i]) {
                 cout << Language[6];
                 Sleep(arr_settings[0]);
+
                 return false;
             }
         }
         if ((name.size() > 10) | (name.size() < 9)) {
             cout << Language[6];
             Sleep(arr_settings[0]);
+
             return false;
         }
         ChangeColour(White);
+
         return true;
     default:
         ChangeColour(Yellow);
         cout << Language[2];
         Sleep(arr_settings[0]);
     }
+
     return false;
 }
 
@@ -296,6 +304,7 @@ void Dire::AddContactToDire(short times) {
                     << Language[54] << left << setw(10) << setfill(separator) 
                     << str_temp_database1 << Language[55];
                 Sleep(arr_settings[0]);
+                SaveUserData();
             }
         }
     }
@@ -305,7 +314,6 @@ void Dire::AddContactToDire(short times) {
         cout << Language[2];
         Sleep(arr_settings[0]);
     }
-    SaveUserData();
 }
 
 void Dire::DeleteContact(const size_t contact) {
@@ -325,11 +333,14 @@ void Dire::DeleteContact(const size_t contact) {
 }
 
 void Dire::RenameContact(short choise_rename, const size_t contact, const string& name) {
+    printloadbar(63);
     system("cls");
     ChangeColour(LightGreen);
+
     if (UserDireCorrect(name, choise_rename)) {
         switch (choise_rename) {
         case 1:
+
             MainContacts[contact].nick = name;
             cout << Language[59] << Language[60] << left << setw(maxNamesize) 
                 << setfill(separator) << MainContacts[contact].nick
@@ -355,6 +366,7 @@ void Dire::RenameContact(short choise_rename, const size_t contact, const string
 }
 
 void Dire::SortContacts(short choise) {
+    printloadbar(20);
     system("cls");
 
     if (MainContacts.size() < 2) {
@@ -370,7 +382,6 @@ void Dire::SortContacts(short choise) {
         }
         else {
             ChangeColour(LightGreen);
-            printloadbar(20);
             switch (choise) {
             case 1:
                 

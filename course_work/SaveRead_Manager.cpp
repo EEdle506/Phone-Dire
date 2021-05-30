@@ -184,6 +184,7 @@ void LoginSystem::ReadDataBase() {
         if (UsersData.empty())
             UsersData.push_back({});
         UsersData.shrink_to_fit();
+        UsersData[user_position].printloadbar(24);
     }
     login_data_in.close();
 }
