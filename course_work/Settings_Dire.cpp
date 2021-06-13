@@ -1,4 +1,3 @@
-using namespace std;
 #include "Dire.h"
 
 //////////////////////////Настройки///////////////////////////////////
@@ -21,7 +20,7 @@ void Dire::FileNameFormat(short choise) {
         break;
     default:
         ChangeColour(Yellow);
-        cout << Language[2];
+        std::cout << Language[2];
         Sleep(arr_settings[0]);
     }
 }
@@ -31,12 +30,12 @@ void Dire::SetLoad(int choise) {
     system("cls");
     switch (choise) {
     case 1:
-        cout << Language[37];
+        std::cout << Language[37];
         Sleep(arr_settings[0]);
         arr_settings[2] = true;
         break;
     case 2:
-        cout << Language[69];
+        std::cout << Language[69];
         Sleep(arr_settings[0]);
         arr_settings[2] = false;
         break;
@@ -72,7 +71,7 @@ int Dire::SetDelay(short choise) {
 
         system("cls");
         ChangeColour(Yellow);
-        cout << Language[2];
+        std::cout << Language[2];
         Sleep(arr_settings[0]);
         arr_settings[1] = 100;
 
@@ -81,7 +80,7 @@ int Dire::SetDelay(short choise) {
 }
 
 void Dire::printloadbar(short index_lang) {
-    string a = "title " + Language[index_lang];
+    std::string a = "title " + Language[index_lang];
     a.append(" [");
     for (int i = 0; i < 7; i++) {
         a.append("::::");
@@ -96,7 +95,7 @@ void Dire::printloadbar(short index_lang) {
 
 void Dire::MassiveAdd(size_t amount) {
     printloadbar(68);
-    string text = "testing name"; string phone = "9999999999";
+    std::string text = "testing name", phone = "9999999999";
 
     if (amount < 2147483647) {
         for (int i = 0; i < amount; i++) {
@@ -107,7 +106,7 @@ void Dire::MassiveAdd(size_t amount) {
     }
     else {
         ChangeColour(LightRed);
-        cout << Language[2];
+        std::cout << Language[2];
         Sleep(arr_settings[0]);
     }
 }
@@ -118,7 +117,7 @@ void Dire::AutoSave(short choise) {
     ChangeColour(LightGreen);
     switch (choise) {
     case 1:
-        cout << Language[40];
+        std::cout << Language[40];
         Sleep(arr_settings[0]);
         arr_settings[3] = true;
 
@@ -126,7 +125,7 @@ void Dire::AutoSave(short choise) {
 
     case 2:
         
-        cout << Language[92];
+        std::cout << Language[92];
         Sleep(arr_settings[0]);
         arr_settings[3] = false;
 
@@ -139,7 +138,7 @@ void Dire::AutoSave(short choise) {
 
     default:
         ChangeColour(Yellow);
-        cout << Language[2];
+        std::cout << Language[2];
         Sleep(arr_settings[0]);
     }
 }

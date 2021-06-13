@@ -1,7 +1,6 @@
-using namespace std;
 #include "Dire.h"
 
-size_t bad_position = 0; string str_temp_phonedire, old_name_file, new_name_file;
+size_t bad_position = 0;
 
 ///////////////////Система логина(PhoneDire)////////////////////////////
 
@@ -21,7 +20,7 @@ void LoginSystem::DataBaseCleaner(size_t index) {
     UsersData.shrink_to_fit();
 }
 
-void Dire::ChangeAccountPass(string& a, int choise) {
+void Dire::ChangeAccountPass(std::string& a, int choise) {
     if (a.size() > 2) {
         switch (choise) {
         case 1:
@@ -35,26 +34,26 @@ void Dire::ChangeAccountPass(string& a, int choise) {
     else {
         system("cls");
         ChangeColour(LightRed);
-        cout << Language[87];
+        std::cout << Language[87];
         Sleep(arr_settings[0]);
     }
 }
 
-bool Dire::CheckAccountLogin(string& a, string& b) {
+bool Dire::CheckAccountLogin(std::string& a, std::string& b) {
     if (login == a && password == b) {
         return true;
     }
     return false;
 }
 
-bool Dire::CheckAccountLogin(string& a) {
+bool Dire::CheckAccountLogin(std::string& a) {
     if (login == a) {
         return true;
     }
     return false;
 }
 
-bool LoginSystem::SetPassToAccount(string& a, string& b, string& c) {
+bool LoginSystem::SetPassToAccount(std::string& a, std::string& b, std::string& c) {
     system("cls");
 
     if (!a.empty() | !b.empty() | !c.empty()) {
@@ -65,7 +64,7 @@ bool LoginSystem::SetPassToAccount(string& a, string& b, string& c) {
                 for (size_t i = 0; i < UsersData.size(); i++) {
                     if (UsersData[i].CheckAccountLogin(a, b)) {
                         ChangeColour(Yellow);
-                        cout << UsersData[i].Language[75];
+                        std::cout << UsersData[i].Language[75];
                         Sleep(UsersData[i].arr_settings[0]);
                         DataBaseCleaner(i);
 
@@ -75,7 +74,7 @@ bool LoginSystem::SetPassToAccount(string& a, string& b, string& c) {
                 UsersData.push_back(Dire(a,b));
                 user_position = UsersData.size() - 1;
                 UsersData[user_position].printloadbar(18);
-                cout << UsersData[user_position].Language[71];
+                std::cout << UsersData[user_position].Language[71];
                 Sleep(UsersData[user_position].arr_settings[0]);
                 SaveDataBase();
                 DataBaseCleaner(user_position);
@@ -84,7 +83,7 @@ bool LoginSystem::SetPassToAccount(string& a, string& b, string& c) {
             }
             else {
                 ChangeColour(Yellow);
-                cout << UsersData[user_position].Language[87];
+                std::cout << UsersData[user_position].Language[87];
                 Sleep(UsersData[user_position].arr_settings[0]);
 
                 return false;
@@ -92,7 +91,7 @@ bool LoginSystem::SetPassToAccount(string& a, string& b, string& c) {
         }
         else {
             ChangeColour(Yellow);
-            cout << UsersData[user_position].Language[94];
+            std::cout << UsersData[user_position].Language[94];
             Sleep(UsersData[user_position].arr_settings[0]);
 
             return false;
@@ -100,14 +99,14 @@ bool LoginSystem::SetPassToAccount(string& a, string& b, string& c) {
     }
     else {
         ChangeColour(LightRed);
-        cout << UsersData[user_position].Language[87];
+        std::cout << UsersData[user_position].Language[87];
         Sleep(UsersData[user_position].arr_settings[0]);
 
         return false;
     }
 }
 
-int LoginSystem::GetLoginToAccount(string& a, string& b) {
+int LoginSystem::GetLoginToAccount(std::string& a, std::string& b) {
     system("cls");
     bad_position = 0; user_position = 0;
     //Пошук аккаунта
@@ -118,22 +117,20 @@ int LoginSystem::GetLoginToAccount(string& a, string& b) {
                 if (UsersData[i].CheckAccountLogin(a, b)) {
                     DataBaseCleaner(i);
                     ChangeColour(LightGreen);
-                    cout << UsersData[user_position].Language[72];
-                    Sleep(750);
-                    UsersData[user_position].LoadUser();
-
+                    std::cout << UsersData[user_position].Language[72];
+                    Sleep(UsersData[user_position].arr_settings[0]);
                     return user_position;
                 }
-            }
+            };
         }
         //Аккаунт не знайдено
         user_position = UsersData.size() - 1;
         DataBaseCleaner(user_position);
         ChangeColour(LightRed);
-        cout << UsersData[user_position].Language[73];
+        std::cout << UsersData[user_position].Language[73];
         Sleep(UsersData[user_position].arr_settings[0]);
         system("cls");
-        cout << UsersData[user_position].Language[74];
+        std::cout << UsersData[user_position].Language[74];
         Sleep(UsersData[user_position].arr_settings[0]);
         system("cls");
         bad_position = UsersData.size() + 2;
@@ -143,7 +140,7 @@ int LoginSystem::GetLoginToAccount(string& a, string& b) {
     else {
         UsersData.push_back({});
         ChangeColour(LightRed);
-        cout << UsersData[user_position].Language[73];
+        std::cout << UsersData[user_position].Language[73];
         Sleep(UsersData[user_position].arr_settings[0]);
         system("cls");
         bad_position = UsersData.size() + 2;
@@ -154,10 +151,8 @@ int LoginSystem::GetLoginToAccount(string& a, string& b) {
 
 void LoginSystem::GetChangeAccount(short choise) {
     if (choise <= 2) {
-        string temp_login = UsersData[user_position].login;
-        old_name_file.clear();
-        new_name_file.clear();
-        str_temp_phonedire.clear();
+        std::string temp_login = UsersData[user_position].login, old_name_file = "", str_temp_phonedire = "", new_name_file = "";
+        
         old_name_file.append("Users_Data/" + UsersData[user_position].login + "_data" + UsersData[user_position].format_file);
         system("cls");
 
@@ -173,11 +168,13 @@ void LoginSystem::GetChangeAccount(short choise) {
         switch (choise) {
         case 1:
 
-            cout << UsersData[user_position].Language[83];
-            getline(cin, str_temp_phonedire);
+            std::cout << UsersData[user_position].Language[83];
+            getline(std::cin, str_temp_phonedire);
 
             new_name_file.append("Users_Data/" + str_temp_phonedire + "_data" + UsersData[user_position].format_file);
-            if (rename(old_name_file.c_str(), new_name_file.c_str()) == 1) { cout << UsersData[user_position].Language[11]; };
+
+            if (rename(old_name_file.c_str(), new_name_file.c_str()) == 1) std::cout << UsersData[user_position].Language[11];
+
             UsersData[user_position].ChangeAccountPass(str_temp_phonedire, 1);
             SaveDataBase();
             DataBaseCleaner(user_position);
@@ -186,8 +183,8 @@ void LoginSystem::GetChangeAccount(short choise) {
 
         case 2:
 
-            cout << UsersData[user_position].Language[84];
-            getline(cin, str_temp_phonedire);
+            std::cout << UsersData[user_position].Language[84];
+            getline(std::cin, str_temp_phonedire);
 
             UsersData[user_position].ChangeAccountPass(str_temp_phonedire, 2);
             SaveDataBase();
@@ -197,18 +194,15 @@ void LoginSystem::GetChangeAccount(short choise) {
     }
     else {
         ChangeColour(Yellow);
-        cout << UsersData[user_position].Language[2];
+        std::cout << UsersData[user_position].Language[2];
         Sleep(UsersData[user_position].arr_settings[0]);
     }
 }
 
 void LoginSystem::GetDeleteAccount() {
     system("cls");
-    new_name_file.clear();
-    str_temp_phonedire.clear();
+    std::string str_temp_phonedire = "", temp_login = UsersData[user_position].login;
     str_temp_phonedire.append("Users_Data/" + UsersData[user_position].login + "_data.bin");
-
-    string temp_login = UsersData[user_position].login;
 
     ReadDataBase();
 
@@ -226,6 +220,7 @@ void LoginSystem::GetDeleteAccount() {
         UsersData.shrink_to_fit();
 
         if (!UsersData.empty()) {
+            user_position = 0;
             SaveDataBase();
 
             UsersData.clear();
@@ -233,7 +228,7 @@ void LoginSystem::GetDeleteAccount() {
 
             UsersData[user_position].printloadbar(19);
             ChangeColour(LightGreen);
-            cout << UsersData[user_position].Language[88];
+            std::cout << UsersData[user_position].Language[88];
             Sleep(UsersData[user_position].arr_settings[0]);
         }
         else {
@@ -241,7 +236,7 @@ void LoginSystem::GetDeleteAccount() {
             SaveDataBase();
             UsersData[user_position].printloadbar(19);
             ChangeColour(LightGreen);
-            cout << UsersData[user_position].Language[88];
+            std::cout << UsersData[user_position].Language[88];
             Sleep(UsersData[user_position].arr_settings[0]);
         }
     }

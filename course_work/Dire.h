@@ -9,10 +9,10 @@
 #include <Windows.h>
 
 template <typename T>
-void GetExport_vector(ofstream& out, const vector<T>& ex_data);
+void GetExport_vector(std::ofstream& out, const std::vector<T>& ex_data);
 
 template <typename T>
-void GetImport_vector(ifstream& in, vector<T>& im_data);
+void GetImport_vector(std::ifstream& in, std::vector<T>& im_data);
 
 /////////////////////////////////////////////////////
 
@@ -39,16 +39,20 @@ enum ColoursType {
 
 struct Contact {
 
-    Contact() {};
-    Contact(string& a, string& b);
+    Contact() {
+        nick = "Unknown_name";
+        phone = "Unknown_phone";
+    }
+
+    Contact(const std::string& a, const std::string& b);
 
     //Запись nick,phone
-    void WriteUnfUserData(ofstream& out) const;
+    void WriteUnfUserData(std::ofstream& out) const;
 
     //Чтение nick,phone
-    void ReadUnfUserData(ifstream& in);
+    void ReadUnfUserData(std::ifstream& in);
 
-    string nick; string phone;
+    std::string nick, phone;
 
     ~Contact();
 };
@@ -59,26 +63,26 @@ struct Dire {
 
     Dire();
 
-    Dire(string& a, string& b);
+    Dire(std::string& a, std::string& b);
 
-    vector<Contact> MainContacts;
-    vector<string> Language;
+    std::vector<Contact> MainContacts;
+    std::vector<std::string> Language;
 
-    string login, format_file = ".bin";
+    std::string login, format_file = ".bin";
 
 private:
-    string password; int delay_text, delay_load;
+    std::string password; int delay_text, delay_load, lang_state, lang_choise, format_type;
 
-    bool auto_save, exec_bar; short lang_state, lang_choise, format_type;
+    bool auto_save, exec_bar; 
 public:
 
     int arr_settings[7]{ delay_text, delay_load, exec_bar, auto_save, lang_choise, lang_state, format_type };
 
     //
-    void WriteUnfUserData(ofstream& out) const;
+    void WriteUnfUserData(std::ofstream& out) const;
 
     //
-    void ReadUnfUserData(ifstream& in);
+    void ReadUnfUserData(std::ifstream& in);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -87,10 +91,9 @@ public:
     ////////////////////////////////////////////Збереження та завантаження контактів//////////////////////////////////////
 
     // 
-    void SaveUserData();
-    bool SaveUserData(string& name);
+    bool SaveUserData(std::string& name);
 
-    bool ReadUserData(string& name);
+    bool ReadUserData(std::string& name);
 
     ////////////////////////////////////////////Завантаження конфігу налаштувань//////////////////////////////////////////////
 
@@ -99,13 +102,13 @@ public:
     //////////////////////////////////////////Зміна паролю//////////////////////////////////////////////////
 
     //Меняет данные в UsersData (login, password).
-    void ChangeAccountPass(string& a, int choise);
+    void ChangeAccountPass(std::string& a, int choise);
 
     //////////////////////////////////////////Перевірка логіна та пароля////////////////////////////////////////////////
 
     //Проверка на существование login, password.
-    bool CheckAccountLogin(string& a, string& b);
-    bool CheckAccountLogin(string& a);
+    bool CheckAccountLogin(std::string& a, std::string& b);
+    bool CheckAccountLogin(std::string& a);
 
     /////////////////////////////////////////Налаштування книги//////////////////////////////////
 
@@ -142,26 +145,26 @@ public:
     void DeleteContact(const size_t contact);
 
     //Переименование контакта из структуры DataBase.h, если пользователя нету, возвращает данные.
-    void RenameContact(short choise_rename, const size_t contact, const string& name);
+    void RenameContact(short choise_rename, const size_t contact, const std::string& name);
 
     //Сортировка контактов с помощью библиотеки <algorithm>. Два типа сортировки(А...Я, Я...А)
     void SortContacts(short choise);
 
     //Поиск контакта, если не находит возвращает данные назад
-    size_t GetSearchContact(const string& name);
+    size_t GetSearchContact(const std::string& name);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-private:
-
-    //
     void ReadUserData();
 
+protected:
+
     void ReadUserSettings();
+    void SaveUserData();
 
     //функція, що надає змогу користувачу виводити список контактів. Якщо немає контактів, то переходить у функцію AddContactToDire.
-    bool UserDireCorrect(const string& name, const string& phone);
-    bool UserDireCorrect(const string& name, int choise);
+    bool UserDireCorrect(const std::string& name, const std::string& phone);
+    bool UserDireCorrect(const std::string& name, int choise);
 
 public:
     ~Dire();
@@ -174,15 +177,15 @@ struct LoginSystem {
     //Конструктор який завантажує базу даних
     LoginSystem();
 
-    vector<Dire> UsersData;
+    std::vector<Dire> UsersData;
     size_t user_position = 0;
 
     //Додає аккаунт в UsersData
-    bool SetPassToAccount(string& a, string& b, string& c);
+    bool SetPassToAccount(std::string& a, std::string& b, std::string& c);
 
     //Шукає існуючий логін та пароль, якщо знаходить, 
     //то повертає позицію знайденого користувача 
-    int GetLoginToAccount(string& a, string& b);
+    int GetLoginToAccount(std::string& a, std::string& b);
 
     //Надає змогу змінювати дані аккаунта
     void GetChangeAccount(short choise);
@@ -211,26 +214,25 @@ int GetKey();
 //Функция для смены цвета в консоли
 void ChangeColour(int colour);
 
-void GetExport_string(ofstream& out, const string& str);
+void GetExport_string(std::ofstream& out, const std::string& str);
 
-string GetImport_string(ifstream& in, string& str);
+std::string GetImport_string(std::ifstream& in, std::string& str);
 
 /////////////////////////////////////////////////////
 
 //Шаблонна функція запису у файл із string (шаблон типа Dire, Contact, LoginSystem)
 template <typename T>
-void GetExport_vector(ofstream &out, const vector<T>& ex_data) {
+void GetExport_vector(std::ofstream &out, const std::vector<T>& ex_data) {
     size_t n = ex_data.size();
     out.write((char*)&n, sizeof(n));
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
         ex_data[i].WriteUnfUserData(out);
-    }
 }
 
 //Шаблонна функція читання із файла у string (шаблон типа Dire, Contact, LoginSystem)
 template <typename T>
-void GetImport_vector(ifstream& in, vector<T>& im_data) {
+void GetImport_vector(std::ifstream& in, std::vector<T>& im_data) {
     size_t size_vec = 0;
     T data_contacts;
 

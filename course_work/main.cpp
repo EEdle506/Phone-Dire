@@ -1,5 +1,4 @@
 #include "resource.h"
-using namespace std;
 
 #include "Menu.h"
 

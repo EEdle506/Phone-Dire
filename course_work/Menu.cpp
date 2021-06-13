@@ -1,22 +1,21 @@
-using namespace std;
 #include "Menu.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 LoginSystem Dire;
 
-string UsersLog, UsersPass, ContName, ContPhone;
-
 int menutype, delay1_text = 1250; const int maxNamesize1 = 16; const char separator1 = ' ';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void GetLoginMenu() {
+
 	while (true) {
+		std::string UsersLog = "", UsersPass = "", ContName = "";
 		system(Dire.UsersData[Dire.user_position].Language[95].c_str());
 		system("cls");
 		ChangeColour(White);
-		cout << Dire.UsersData[Dire.user_position].Language[76];
+		std::cout << Dire.UsersData[Dire.user_position].Language[76];
 		if (_getch() == 27) { Dire.UsersData[Dire.user_position].printloadbar(26); break; }
 
 		switch (GetKey()) {
@@ -26,14 +25,14 @@ void GetLoginMenu() {
 			system(Dire.UsersData[Dire.user_position].Language[108].c_str());
 			system("cls");
 
-			cout << Dire.UsersData[Dire.user_position].Language[77];
-			cout << Dire.UsersData[Dire.user_position].Language[81];
+			std::cout << Dire.UsersData[Dire.user_position].Language[77]
+			<< Dire.UsersData[Dire.user_position].Language[81];
 
 			if (_getch() == 27) { Dire.UsersData[Dire.user_position].printloadbar(26); continue; }
 
-			getline(cin, UsersLog);
-			cout << Dire.UsersData[Dire.user_position].Language[82];
-			getline(cin, UsersPass);
+			getline(std::cin, UsersLog);
+			std::cout << Dire.UsersData[Dire.user_position].Language[82];
+			getline(std::cin, UsersPass);
 
 			GetDireMainMenu(Dire.GetLoginToAccount(UsersLog, UsersPass));
 
@@ -45,20 +44,19 @@ void GetLoginMenu() {
 			system(Dire.UsersData[Dire.user_position].Language[109].c_str());
 			system("cls");
 
-			cout << Dire.UsersData[Dire.user_position].Language[78];
-			cout << Dire.UsersData[Dire.user_position].Language[81];
+			std::cout << Dire.UsersData[Dire.user_position].Language[78]
+			<< Dire.UsersData[Dire.user_position].Language[81];
 			
 			if (_getch() == 27) { Dire.UsersData[Dire.user_position].printloadbar(26); continue; }
 			
-			getline(cin, UsersLog);
-			cout << Dire.UsersData[Dire.user_position].Language[82];
-			getline(cin, UsersPass);
+			getline(std::cin, UsersLog);
+			std::cout << Dire.UsersData[Dire.user_position].Language[82];
+			getline(std::cin, UsersPass);
 			system("cls");
-			cout << Dire.UsersData[Dire.user_position].Language[93];
-			getline(cin, ContName);
+			std::cout << Dire.UsersData[Dire.user_position].Language[93];
+			getline(std::cin, ContName);
 
-			if (Dire.SetPassToAccount(UsersLog, UsersPass, ContName))
-				continue;
+			if (Dire.SetPassToAccount(UsersLog, UsersPass, ContName)) continue;
 
 			continue;
 
@@ -68,20 +66,20 @@ void GetLoginMenu() {
 			system(Dire.UsersData[Dire.user_position].Language[110].c_str());
 			system("cls");
 
-			cout << Dire.UsersData[Dire.user_position].Language[80];
-			cout << Dire.UsersData[Dire.user_position].Language[81];
+			std::cout << Dire.UsersData[Dire.user_position].Language[80];
+			std::cout << Dire.UsersData[Dire.user_position].Language[81];
 			
 			if (_getch() == 27) { Dire.UsersData[Dire.user_position].printloadbar(26); continue; }
 
-			getline(cin, UsersLog);
-			cout << Dire.UsersData[Dire.user_position].Language[82];
-			getline(cin, UsersPass);
+			getline(std::cin, UsersLog);
+			std::cout << Dire.UsersData[Dire.user_position].Language[82];
+			getline(std::cin, UsersPass);
 
 			if (Dire.GetLoginToAccount(UsersLog, UsersPass) < Dire.UsersData.size()) {
 				Dire.UsersData[Dire.user_position].printloadbar(63);
 				system("cls");
 				ChangeColour(White);
-				cout << Dire.UsersData[Dire.user_position].Language[79];
+				std::cout << Dire.UsersData[Dire.user_position].Language[79];
 
 				if (_getch() == 27) { Dire.UsersData[Dire.user_position].printloadbar(26); continue; }
 
@@ -96,20 +94,20 @@ void GetLoginMenu() {
 			system(Dire.UsersData[Dire.user_position].Language[111].c_str());
 
 			system("cls");
-			cout << Dire.UsersData[Dire.user_position].Language[85];
-			cout << Dire.UsersData[Dire.user_position].Language[81];
+			std::cout << Dire.UsersData[Dire.user_position].Language[85]
+			<< Dire.UsersData[Dire.user_position].Language[81];
 
 			if (_getch() == 27) { Dire.UsersData[Dire.user_position].printloadbar(26); continue; }
 
-			getline(cin, UsersLog);
-			cout << Dire.UsersData[Dire.user_position].Language[82];
-			getline(cin, UsersPass);
+			getline(std::cin, UsersLog);
+			std::cout << Dire.UsersData[Dire.user_position].Language[82];
+			getline(std::cin, UsersPass);
 
 			if (Dire.GetLoginToAccount(UsersLog, UsersPass) < Dire.UsersData.size()) {
 				Dire.UsersData[Dire.user_position].printloadbar(63);
 				system("cls");
 				ChangeColour(White);
-				cout << Dire.UsersData[Dire.user_position].Language[86];
+				std::cout << Dire.UsersData[Dire.user_position].Language[86];
 
 				if (_getch() == 27) { Dire.UsersData[Dire.user_position].printloadbar(26); continue; }
 
@@ -131,7 +129,7 @@ void GetLoginMenu() {
 
 					system("cls");
 					ChangeColour(Yellow);
-					cout << Dire.UsersData[Dire.user_position].Language[2];
+					std::cout << Dire.UsersData[Dire.user_position].Language[2];
 					Sleep(delay1_text);
 
 					continue;
@@ -144,7 +142,7 @@ void GetLoginMenu() {
 			Dire.UsersData[Dire.user_position].printloadbar(63);
 			system(Dire.UsersData[Dire.user_position].Language[98].c_str());
 			system("cls");
-			cout << Dire.UsersData[Dire.user_position].Language[43];
+			std::cout << Dire.UsersData[Dire.user_position].Language[43];
 			if (_getch() == 27) { Dire.UsersData[Dire.user_position].printloadbar(26); continue; }
 			Dire.UsersData[Dire.user_position].SwitchLanguage(GetKey(), true);
 
@@ -160,7 +158,7 @@ void GetLoginMenu() {
 			Dire.UsersData[Dire.user_position].printloadbar(63);
 			system("cls");
 			ChangeColour(Yellow);
-			cout << Dire.UsersData[Dire.user_position].Language[2];
+			std::cout << Dire.UsersData[Dire.user_position].Language[2];
 			Sleep(delay1_text);
 
 			continue;
@@ -170,14 +168,17 @@ void GetLoginMenu() {
 }
 
 void GetDireMainMenu(const size_t index) {
+
 	if (index < Dire.UsersData.size()) {
+		Dire.UsersData[index].LoadUser();
 		Dire.UsersData[index].printloadbar(16);
 		while (true) {
+			std::string UsersLog = "";
 			system(Dire.UsersData[Dire.user_position].Language[96].c_str());
 			system("cls");
 			ChangeColour(White);
 
-			cout << Dire.UsersData[index].Language[38];
+			std::cout << Dire.UsersData[index].Language[38];
 			if (_getch() == 27) { Dire.UsersData[index].printloadbar(26); break; }
 
 			switch (GetKey()) {
@@ -192,17 +193,17 @@ void GetDireMainMenu(const size_t index) {
 				Dire.UsersData[index].printloadbar(63);
 				system(Dire.UsersData[Dire.user_position].Language[112].c_str());
 				system("cls");
-				cout << Dire.UsersData[index].Language[39];
+				std::cout << Dire.UsersData[index].Language[39];
 
 				if (_getch() == 27) { Dire.UsersData[index].printloadbar(26); continue; }
 
-				getline(cin, UsersLog);
+				getline(std::cin, UsersLog);
 
 				if (Dire.UsersData[index].SaveUserData(UsersLog)) {
 					Dire.UsersData[index].printloadbar(21);
 					system("cls");
 
-					cout << Dire.UsersData[index].Language[12];
+					std::cout << Dire.UsersData[index].Language[12];
 					Sleep(delay1_text);
 
 					continue;
@@ -210,7 +211,7 @@ void GetDireMainMenu(const size_t index) {
 				else {
 					system("cls");
 					ChangeColour(LightRed);
-					cout << Dire.UsersData[index].Language[0];
+					std::cout << Dire.UsersData[index].Language[0];
 					Sleep(delay1_text);
 
 					continue;
@@ -224,17 +225,17 @@ void GetDireMainMenu(const size_t index) {
 				system(Dire.UsersData[Dire.user_position].Language[113].c_str());
 				system("cls");
 
-				cout << Dire.UsersData[index].Language[41];
+				std::cout << Dire.UsersData[index].Language[41];
 
 				if (_getch() == 27) { Dire.UsersData[index].printloadbar(26); continue; }
 
-				getline(cin, UsersLog);
+				getline(std::cin, UsersLog);
 
 				if (Dire.UsersData[index].ReadUserData(UsersLog)) {
 					Dire.UsersData[index].printloadbar(22);
 					system("cls");
 
-					cout << Dire.UsersData[index].Language[14];
+					std::cout << Dire.UsersData[index].Language[14];
 					Sleep(delay1_text);
 
 					continue;
@@ -250,6 +251,7 @@ void GetDireMainMenu(const size_t index) {
 			case 5:
 
 				Dire.UsersData[index].printloadbar(26);
+				Dire.UsersData[index].MainContacts.clear();
 
 				break;
 
@@ -259,7 +261,7 @@ void GetDireMainMenu(const size_t index) {
 				system("cls");
 
 				ChangeColour(Yellow);
-				cout << Dire.UsersData[index].Language[2];
+				std::cout << Dire.UsersData[index].Language[2];
 				Sleep(delay1_text);
 
 				continue;
@@ -273,11 +275,12 @@ void GetDireMainMenu(const size_t index) {
 void GetDireMenu(const size_t index) {
 	Dire.UsersData[index].printloadbar(63);
 	while (true) {
+		std::string ContName = "";
 		system(Dire.UsersData[Dire.user_position].Language[97].c_str());
 		system("cls");
 
 		ChangeColour(White);
-		cout << Dire.UsersData[index].Language[27];
+		std::cout << Dire.UsersData[index].Language[27];
 
 		if (_getch() == 27) { Dire.UsersData[index].printloadbar(26); break; }
 
@@ -297,11 +300,11 @@ void GetDireMenu(const size_t index) {
 			system(Dire.UsersData[Dire.user_position].Language[106].c_str());
 			system("cls");
 			ChangeColour(White);
-			cout << Dire.UsersData[index].Language[30];
+			std::cout << Dire.UsersData[index].Language[30];
 
 			if (_getch() == 27) { Dire.UsersData[Dire.user_position].printloadbar(26); continue; }
 
-			getline(cin, ContName);
+			getline(std::cin, ContName);
 
 			Dire.UsersData[index].printloadbar(15);
 			ContactPrefs(index, Dire.UsersData[index].GetSearchContact(ContName));
@@ -314,7 +317,7 @@ void GetDireMenu(const size_t index) {
 			system("cls");
 
 			ChangeColour(White);
-			cout << Dire.UsersData[index].Language[90];
+			std::cout << Dire.UsersData[index].Language[90];
 
 			if (_getch() == 27) { Dire.UsersData[Dire.user_position].printloadbar(26); continue; }
 
@@ -328,7 +331,7 @@ void GetDireMenu(const size_t index) {
 			system("cls");
 
 			ChangeColour(White);
-			cout << Dire.UsersData[index].Language[31];
+			std::cout << Dire.UsersData[index].Language[31];
 
 			if (_getch() == 27) { Dire.UsersData[Dire.user_position].printloadbar(26); continue; }
 
@@ -347,7 +350,7 @@ void GetDireMenu(const size_t index) {
 			system("cls");
 
 			ChangeColour(Yellow);
-			cout << Dire.UsersData[index].Language[2];
+			std::cout << Dire.UsersData[index].Language[2];
 			Sleep(delay1_text);
 
 			continue;
@@ -357,13 +360,15 @@ void GetDireMenu(const size_t index) {
 }
 
 void GetSettings(const size_t index) {
+
 	Dire.UsersData[index].printloadbar(23);
+
 	while (true) {
 		system(Dire.UsersData[Dire.user_position].Language[99].c_str());
 		system("cls");
 
 		ChangeColour(White);
-		cout << Dire.UsersData[index].Language[42];
+		std::cout << Dire.UsersData[index].Language[42];
 
 		if (_getch() == 27) { Dire.UsersData[index].printloadbar(26); break; }
 
@@ -375,7 +380,7 @@ void GetSettings(const size_t index) {
 			system("cls");
 
 			ChangeColour(White);
-			cout << Dire.UsersData[index].Language[44];
+			std::cout << Dire.UsersData[index].Language[44];
 
 			if (_getch() == 27) { Dire.UsersData[index].printloadbar(26); continue; }
 
@@ -390,12 +395,12 @@ void GetSettings(const size_t index) {
 
 			ChangeColour(White);
 
-			cout << Dire.UsersData[index].Language[67];
+			std::cout << Dire.UsersData[index].Language[67];
 
 			if (_getch() == 27) { Dire.UsersData[index].printloadbar(26); continue; }
 
-			cin >> menutype;
-			cin.ignore();
+			std::cin >> menutype;
+			std::cin.ignore();
 			Dire.UsersData[index].printloadbar(63);
 			Dire.UsersData[index].MassiveAdd(menutype);
 
@@ -407,7 +412,7 @@ void GetSettings(const size_t index) {
 			system(Dire.UsersData[Dire.user_position].Language[102].c_str());
 			system("cls");
 
-			cout << Dire.UsersData[index].Language[45];
+			std::cout << Dire.UsersData[index].Language[45];
 
 			if (_getch() == 27) { Dire.UsersData[index].printloadbar(26); continue; }
 
@@ -417,7 +422,7 @@ void GetSettings(const size_t index) {
 				Dire.UsersData[index].printloadbar(63);
 				system("cls");
 
-				cout << Dire.UsersData[index].Language[46];
+				std::cout << Dire.UsersData[index].Language[46];
 
 				if (_getch() == 27) { Dire.UsersData[Dire.user_position].printloadbar(26); continue; }
 
@@ -444,7 +449,7 @@ void GetSettings(const size_t index) {
 				system("cls");
 
 				ChangeColour(Yellow);
-				cout << Dire.UsersData[index].Language[2];
+				std::cout << Dire.UsersData[index].Language[2];
 				Sleep(delay1_text);
 
 				continue;
@@ -457,7 +462,7 @@ void GetSettings(const size_t index) {
 			system(Dire.UsersData[Dire.user_position].Language[103].c_str());
 			system("cls");
 
-			cout << Dire.UsersData[index].Language[91];
+			std::cout << Dire.UsersData[index].Language[91];
 
 			if (_getch() == 27) { Dire.UsersData[index].printloadbar(26); continue; }
 
@@ -477,7 +482,7 @@ void GetSettings(const size_t index) {
 			system("cls");
 
 			ChangeColour(Yellow);
-			cout << Dire.UsersData[index].Language[2];
+			std::cout << Dire.UsersData[index].Language[2];
 			Sleep(delay1_text);
 
 			continue;
@@ -488,17 +493,18 @@ void GetSettings(const size_t index) {
 }
 
 void ContactPrefs(const size_t index, const size_t contact) {
+
 	if (contact > Dire.UsersData[index].MainContacts.size());
 	else {
 		if (!Dire.UsersData[index].MainContacts.empty()) {
-			system("cls");
+			std::string ContName = "";
 			while (true) {
 				system(Dire.UsersData[Dire.user_position].Language[100].c_str());
 				system("cls");
 				ChangeColour(White);
-				cout << Dire.UsersData[index].Language[32] << left << setw(maxNamesize1) << setfill(separator1)
+				std::cout << Dire.UsersData[index].Language[32] << std::left << std::setw(maxNamesize1) << std::setfill(separator1)
 					<< Dire.UsersData[index].MainContacts[contact].nick << Dire.UsersData[index].Language[33]
-					<< left << setw(10) << setfill(separator1) << Dire.UsersData[index].MainContacts[contact].phone
+					<< std::left << std::setw(10) << std::setfill(separator1) << Dire.UsersData[index].MainContacts[contact].phone
 					<< Dire.UsersData[index].Language[34];
 
 				if (_getch() == 27) { Dire.UsersData[index].printloadbar(26); break; }
@@ -507,17 +513,16 @@ void ContactPrefs(const size_t index, const size_t contact) {
 				case 1:
 
 					Dire.UsersData[index].printloadbar(63);
-					system("cls");
-
 					ChangeColour(White);
-					cout << Dire.UsersData[index].Language[35];
+					system("cls");
+					std::cout << Dire.UsersData[index].Language[35];
 					
 					if (_getch() == 27) { Dire.UsersData[Dire.user_position].printloadbar(26); continue; }
 					
 					menutype = GetKey();
 					
-					cout << Dire.UsersData[index].Language[36];
-					getline(cin, ContName);
+					std::cout << Dire.UsersData[index].Language[36];
+					getline(std::cin, ContName);
 
 					Dire.UsersData[index].printloadbar(58);
 
@@ -528,7 +533,6 @@ void ContactPrefs(const size_t index, const size_t contact) {
 				case 2:
 
 					Dire.UsersData[index].printloadbar(19);
-					system("cls");
 
 					Dire.UsersData[index].DeleteContact(contact);
 
@@ -537,29 +541,27 @@ void ContactPrefs(const size_t index, const size_t contact) {
 				case 3:
 
 					Dire.UsersData[index].printloadbar(26);
-					system("cls");
 
 					break;
 
 				default:
 
 					Dire.UsersData[index].printloadbar(63);
-					system("cls");
 
 					ChangeColour(Yellow);
-					cout << Dire.UsersData[index].Language[2];
+					std::cout << Dire.UsersData[index].Language[2];
 					Sleep(delay1_text);
 
 					continue;
 				}
+				system("cls");
 				break;
 			}
 		}
 		else {
 			system("cls");
-
 			ChangeColour(LightRed);
-			cout << Dire.UsersData[index].Language[0];
+			std::cout << Dire.UsersData[index].Language[0];
 			Sleep(delay1_text);
 		}
 	}
