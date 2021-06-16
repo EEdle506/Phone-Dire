@@ -1,10 +1,16 @@
 #include "Dire.h"
 
-const int maxNamesize = 16; const char separator = ' ';
+#define maxNamesize 16
+#define separator ' '
 
 //////////////////////////////////////////Конуструктор//////////////////////////////////////
 
-Contact::Contact(const std::string& nick, const std::string& phone) {
+Contact::Contact(std::string&& nick, std::string&& phone) {
+    this->nick = nick;
+    this->phone = phone;
+}
+
+Contact::Contact(std::string& nick, std::string& phone) {
     this->nick = nick;
     this->phone = phone;
 }
@@ -17,9 +23,7 @@ Dire::Dire() {
     FileNameFormat(arr_settings[6]);
 }
 
-Dire::Dire(std::string & login, std::string & password) {
-    this->login = login;
-    this->password = password;
+Dire::Dire(const std::string & login, const std::string & password) : login(login), password(password) {
     ReadUserSettings();
     SwitchLanguage(arr_settings[4], false);
     FileNameFormat(arr_settings[6]);
@@ -32,41 +36,14 @@ void Dire::LoadUser() {
     ReadUserData();
 }
 
-void Dire::SwitchLanguage(short choise, bool check_state) {
-    std::string str_temp_database = "";
+void Dire::SwitchLanguage(const short& choise, bool check_state) {
+    
+    //Without cheking language
     if (!check_state) {
         arr_settings[4] = choise;   //lang_choise
-        switch (choise) {
-        case 1:
-            str_temp_database.assign("Languages/russian.bin"); break;
-        case 2:
-            str_temp_database.assign("Languages/english.bin"); break;
-        case 3:
-            str_temp_database.assign("Languages/ukrainian.bin"); break;
-        }
-
-        std::ifstream lang(str_temp_database, std::ios::binary);
-
-        if (lang.is_open()) {
-            size_t size_vec;
-            lang.read((char*)&size_vec, sizeof(size_vec));
-
-            Language.clear();
-
-            for (int i = 0; i < size_vec; ++i) {
-                str_temp_database = GetImport_string(lang, str_temp_database);
-                Language.push_back(str_temp_database);
-            }
-        }
-        else {
-            ChangeColour(LightRed);
-            std::cout << "+~~~~~~~(Предупреждение)~~~~~~~+\n | Файл не может быть открыт! |\n+==============================+\n";
-            "Примечание: Возможно вы удалили файлы языка!\nЧтобы их восстановить зайдите в папку deleted_language!";
-            lang.close();
-            exit(-1);
-        }
-        lang.close();
+        LangLoad(Language, choise);
     }
+    //With cheking language state
     else {
         if (arr_settings[5] != choise) {    //lang_state
             ChangeColour(LightGreen);
@@ -76,30 +53,7 @@ void Dire::SwitchLanguage(short choise, bool check_state) {
 
                 SaveUserSettings();
 
-                switch (choise) {
-                case 1:
-                    str_temp_database.assign("Languages/russian.bin");
-                    break;
-
-                case 2:
-                    str_temp_database.assign("Languages/english.bin");
-                    break;
-                case 3:
-                    str_temp_database.assign("Languages/ukrainian.bin");
-                    break;
-                }
-
-                std::ifstream lang(str_temp_database, std::ios::binary);
-                size_t size_vec;
-                Language.clear();
-
-                lang.read((char*)&size_vec, sizeof(size_vec));
-                for (size_t i = 0; i < size_vec; i++) {
-                    str_temp_database = GetImport_string(lang, str_temp_database);
-                    Language.push_back(str_temp_database);
-                }
-
-                lang.close();
+                LangLoad(Language, choise);
 
                 system("cls");
                 std::cout << Language[13];
@@ -133,7 +87,7 @@ void Dire::GetDireList() {
         ChangeColour(White);
         int PrintDataCount = 0;
         std::cout << Language[47];
-        for (auto elem : MainContacts) {
+        for (auto& elem : MainContacts) {
             PrintDataCount++;
             std::cout << Language[48] << std::right << std::setw(5) << std::setfill(separator)
                 << PrintDataCount<< Language[49] << std::left
@@ -159,7 +113,7 @@ void Dire::GetDireList() {
     }
 }
 
-bool Dire::UserDireCorrect(const std::string& name, const std::string& phone) {
+bool Dire::UserDireCorrect(const std::string& name, const std::string& phone) const {
     system("cls");
     ChangeColour(LightRed);
     if (name.empty() | phone.empty()) {
@@ -167,7 +121,7 @@ bool Dire::UserDireCorrect(const std::string& name, const std::string& phone) {
         Sleep(arr_settings[0]);
         return false;
     }
-    for (int i = 0; i < phone.size(); i++) {
+    for (int i = 0; i < phone.size(); ++i) {
         if (64 < (int)phone[i] && 123 > (int)phone[i]) {
             std::cout << Language[6];
             Sleep(arr_settings[0]);
@@ -202,7 +156,7 @@ bool Dire::UserDireCorrect(const std::string& name, const std::string& phone) {
     }
 }
 
-bool Dire::UserDireCorrect(const std::string& name, int choise) {
+bool Dire::UserDireCorrect(const std::string& name, int choise) const {
     system("cls");
     ChangeColour(LightRed);
 
@@ -260,11 +214,11 @@ bool Dire::UserDireCorrect(const std::string& name, int choise) {
     return false;
 }
 
-void Dire::AddContactToDire(short times) {
+void Dire::AddContactToDire(const short& times) {
     if (times < 7 && times > 0) {
         printloadbar(63);
         std::string str_temp_database = "", str_temp_database1;
-        for (int i = 0; i < times; i++) {
+        for (int i = 0; i < times; ++i) {
             system("cls");
             ChangeColour(White);
             std::cout << Language[28];
@@ -292,7 +246,7 @@ void Dire::AddContactToDire(short times) {
     }
 }
 
-void Dire::DeleteContact(const size_t contact) {
+void Dire::DeleteContact(const size_t& contact) {
     system("cls");
     ChangeColour(LightGreen);
 
@@ -308,7 +262,7 @@ void Dire::DeleteContact(const size_t contact) {
     SaveUserData();
 }
 
-void Dire::RenameContact(short choise_rename, const size_t contact, const std::string& name) {
+void Dire::RenameContact(const short& choise_rename, const size_t& contact, const std::string& name) {
     system("cls");
     ChangeColour(LightGreen);
 
@@ -341,7 +295,7 @@ void Dire::RenameContact(short choise_rename, const size_t contact, const std::s
     }
 }
 
-void Dire::SortContacts(short choise) {
+void Dire::SortContacts(const short& choise) {
     printloadbar(20);
     system("cls");
 

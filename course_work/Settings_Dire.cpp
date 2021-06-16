@@ -2,7 +2,7 @@
 
 //////////////////////////Настройки///////////////////////////////////
 
-void Dire::FileNameFormat(short choise) {
+void Dire::FileNameFormat(const short& choise) {
     printloadbar(17);
     system("cls");
     switch (choise) {
@@ -25,7 +25,7 @@ void Dire::FileNameFormat(short choise) {
     }
 }
 
-void Dire::SetLoad(int choise) {
+void Dire::SetLoad(const short& choise) {
     printloadbar(17);
     system("cls");
     switch (choise) {
@@ -42,7 +42,7 @@ void Dire::SetLoad(int choise) {
     }
 }
 
-int Dire::SetDelay(short choise) {
+int Dire::SetDelay(const short& choise) {
     printloadbar(17);
     
     switch (choise) {
@@ -79,12 +79,13 @@ int Dire::SetDelay(short choise) {
     }
 }
 
-void Dire::printloadbar(short index_lang) {
+void Dire::printloadbar(const short &index_lang) {
     std::string a = "title " + Language[index_lang];
     a.append(" [");
     for (int i = 0; i < 7; i++) {
-        a.append("::::");
-        if (i == 6) a.append("] 100%\n");
+        a.append(":::");
+        if (i == 6) 
+            a.append("] 100%\n");
         system(a.c_str());
         Sleep(arr_settings[1]-40);
     }
@@ -93,25 +94,26 @@ void Dire::printloadbar(short index_lang) {
     system("title ");
 }
 
-void Dire::MassiveAdd(size_t amount) {
-    printloadbar(68);
-    std::string text = "testing name", phone = "9999999999";
-
-    if (amount < 2147483647) {
-        for (int i = 0; i < amount; i++) {
-            MainContacts.push_back(Contact(text, phone));
-        }
-        SaveUserData();
-        printloadbar(63);
+void Dire::MassiveAdd(const size_t& amount) {
+    auto temp = MainContacts;
+    
+    try {
+        printloadbar(68);
+        for (int i = 0; i < amount; ++i)
+            MainContacts.push_back(Contact("testing name", "9999999999"));
+        SaveUserData(); 
     }
-    else {
+    catch (const std::exception& ex)
+    {
         ChangeColour(LightRed);
-        std::cout << Language[2];
+        std::cout << "Something went wrong!\n[MassiveAdd] Code: "<<ex.what();
         Sleep(arr_settings[0]);
+        MainContacts.clear();
+        MainContacts = temp;
     }
 }
 
-void Dire::AutoSave(short choise) {
+void Dire::AutoSave(const short& choise) {
     printloadbar(17);
     system("cls");
     ChangeColour(LightGreen);

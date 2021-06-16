@@ -1,10 +1,13 @@
 #include "Menu.h"
 
+#define maxNamesize1 16
+#define separator1 ' '
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 LoginSystem Dire;
 
-int menutype, delay1_text = 1250; const int maxNamesize1 = 16; const char separator1 = ' ';
+int menutype, delay1_text = 1250;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -142,8 +145,11 @@ void GetLoginMenu() {
 			Dire.UsersData[Dire.user_position].printloadbar(63);
 			system(Dire.UsersData[Dire.user_position].Language[98].c_str());
 			system("cls");
+
 			std::cout << Dire.UsersData[Dire.user_position].Language[43];
+
 			if (_getch() == 27) { Dire.UsersData[Dire.user_position].printloadbar(26); continue; }
+
 			Dire.UsersData[Dire.user_position].SwitchLanguage(GetKey(), true);
 
 			continue;

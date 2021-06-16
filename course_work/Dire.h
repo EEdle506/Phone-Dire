@@ -17,20 +17,11 @@ void GetImport_vector(std::ifstream& in, std::vector<T>& im_data);
 /////////////////////////////////////////////////////
 
 enum ColoursType {
-    Black = 0,
-    Blue = 1,
-    Green = 2,
     Cyan = 3,
-    Red = 4,
     Magenta = 5,
-    Brown = 6,
-    LightGray = 7,
-    DarkGray = 8,
     LightBlue = 9,
     LightGreen = 10,
-    LightCyan = 11,
     LightRed = 12,
-    LightMagenta = 13,
     Yellow = 14,
     White = 15,
 };
@@ -44,15 +35,18 @@ struct Contact {
         phone = "Unknown_phone";
     }
 
-    Contact(const std::string& a, const std::string& b);
+    Contact(std::string&& nick, std::string&& phone);
 
-    //Запись nick,phone
+    Contact(std::string& nick, std::string& phone);
+
+    //Запись nick, phone
     void WriteUnfUserData(std::ofstream& out) const;
 
     //Чтение nick,phone
     void ReadUnfUserData(std::ifstream& in);
 
     std::string nick, phone;
+
 
     ~Contact();
 };
@@ -63,7 +57,7 @@ struct Dire {
 
     Dire();
 
-    Dire(std::string& a, std::string& b);
+    Dire(const std::string& login, const std::string& password);
 
     std::vector<Contact> MainContacts;
     std::vector<std::string> Language;
@@ -71,7 +65,7 @@ struct Dire {
     std::string login, format_file = ".bin";
 
 private:
-    std::string password; int delay_text, delay_load, lang_state, lang_choise, format_type;
+    std::string password; short delay_text, delay_load, lang_state, lang_choise, format_type;
 
     bool auto_save, exec_bar; 
 public:
@@ -91,9 +85,9 @@ public:
     ////////////////////////////////////////////Збереження та завантаження контактів//////////////////////////////////////
 
     // 
-    bool SaveUserData(std::string& name);
+    bool SaveUserData(const std::string& name) const;
 
-    bool ReadUserData(std::string& name);
+    bool ReadUserData(const std::string& name);
 
     ////////////////////////////////////////////Завантаження конфігу налаштувань//////////////////////////////////////////////
 
@@ -102,36 +96,36 @@ public:
     //////////////////////////////////////////Зміна паролю//////////////////////////////////////////////////
 
     //Меняет данные в UsersData (login, password).
-    void ChangeAccountPass(std::string& a, int choise);
+    void ChangeAccountPass(const std::string& a, const short& choise);
 
     //////////////////////////////////////////Перевірка логіна та пароля////////////////////////////////////////////////
 
     //Проверка на существование login, password.
-    bool CheckAccountLogin(std::string& a, std::string& b);
-    bool CheckAccountLogin(std::string& a);
+    bool CheckAccountLogin(const std::string& a, const std::string& b);
+    bool CheckAccountLogin(const std::string& a);
 
     /////////////////////////////////////////Налаштування книги//////////////////////////////////
 
     //Зміна мови
-    void SwitchLanguage(short choise, bool check_state);
+    void SwitchLanguage(const short& choise, bool check_state);
 
     //Функція збереження файлу з форматом або без.
-    void FileNameFormat(short choise);
+    void FileNameFormat(const short& choise);
 
     //Ставить затримку вивода тексту.
-    int SetDelay(short choise);
+    int SetDelay(const short& choise);
 
     //Вивід меню завантаження.
-    void printloadbar(short index_lang);
+    void printloadbar(const short& index_lang);
 
     //Функція вімкнення та вимикання меню завантаження
-    void SetLoad(int choise);
+    void SetLoad(const short& choise);
 
     //Надає можливість користувачу вводити n кількість згенерованих контактів.
-    void MassiveAdd(size_t amount);
+    void MassiveAdd(const size_t& amount);
 
     //Вмткає / вимикає автоматичне збереження
-    void AutoSave(short choise);
+    void AutoSave(const short& choise);
 
     ////////////////////////////////////////////Меню телефонної книги////////////////////////////
 
@@ -139,16 +133,16 @@ public:
     void GetDireList();
 
     //функція, що надає змогу додати контакт до телефонної книги (також вона використовує функцію UserDireCorrect).
-    void AddContactToDire(short times);
+    void AddContactToDire(const short& times);
 
     //функція, що надає змогу видалити контакт. Якщо записник пустий, функція видасть повідомлення про пусту книгу.
-    void DeleteContact(const size_t contact);
+    void DeleteContact(const size_t& contact);
 
     //Переименование контакта из структуры DataBase.h, если пользователя нету, возвращает данные.
-    void RenameContact(short choise_rename, const size_t contact, const std::string& name);
+    void RenameContact(const short& choise_rename, const size_t& contact, const std::string& name);
 
     //Сортировка контактов с помощью библиотеки <algorithm>. Два типа сортировки(А...Я, Я...А)
-    void SortContacts(short choise);
+    void SortContacts(const short& choise);
 
     //Поиск контакта, если не находит возвращает данные назад
     size_t GetSearchContact(const std::string& name);
@@ -160,11 +154,11 @@ public:
 protected:
 
     void ReadUserSettings();
-    void SaveUserData();
+    void SaveUserData() const;
 
     //функція, що надає змогу користувачу виводити список контактів. Якщо немає контактів, то переходить у функцію AddContactToDire.
-    bool UserDireCorrect(const std::string& name, const std::string& phone);
-    bool UserDireCorrect(const std::string& name, int choise);
+    bool UserDireCorrect(const std::string& name, const std::string& phone) const;
+    bool UserDireCorrect(const std::string& name, int choise) const;
 
 public:
     ~Dire();
@@ -181,26 +175,26 @@ struct LoginSystem {
     size_t user_position = 0;
 
     //Додає аккаунт в UsersData
-    bool SetPassToAccount(std::string& a, std::string& b, std::string& c);
+    bool SetPassToAccount(const std::string& a, const std::string& b, const std::string& c);
 
     //Шукає існуючий логін та пароль, якщо знаходить, 
     //то повертає позицію знайденого користувача 
-    int GetLoginToAccount(std::string& a, std::string& b);
+    int GetLoginToAccount(const std::string& a, const std::string& b);
 
     //Надає змогу змінювати дані аккаунта
-    void GetChangeAccount(short choise);
+    void GetChangeAccount(const short& choise);
 
     //Видаляє аккаунт
     void GetDeleteAccount();
 
 private:
     //Зберігає UsersData у файл логін та пароль
-    void SaveDataBase();
+    void SaveDataBase() const;
 
     //Завантажує із файлу логін та пароль у UsersData
     void ReadDataBase();
 
-    void DataBaseCleaner(size_t index);
+    void DataBaseCleaner(const size_t& index);
 
 public:
     ~LoginSystem();
@@ -217,6 +211,8 @@ void ChangeColour(int colour);
 void GetExport_string(std::ofstream& out, const std::string& str);
 
 std::string GetImport_string(std::ifstream& in, std::string& str);
+
+void LangLoad(std::vector<std::string>& language, const short &index);
 
 /////////////////////////////////////////////////////
 

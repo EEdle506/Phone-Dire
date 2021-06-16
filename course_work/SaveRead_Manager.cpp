@@ -42,7 +42,7 @@ void Dire::SaveUserSettings() {
     std::ofstream out("Settings/settings.txt");
 
     if (out.is_open()) {
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 7; ++i)
             out << arr_settings[i] << std::endl;
         printloadbar(25);
     }
@@ -78,7 +78,7 @@ void Dire::ReadUserSettings() {
 
 /////////////Запись/Чтение контактов(Dire)////////////////////////
 
-void Dire::WriteUnfUserData(std::ofstream& out)const {      //UsersData
+void Dire::WriteUnfUserData(std::ofstream& out) const {      //UsersData
     GetExport_string(out, login);
     GetExport_string(out, password);
 }
@@ -89,7 +89,7 @@ void Dire::ReadUnfUserData(std::ifstream& in) {              //UsersData
     SwitchLanguage(arr_settings[4], false);
 }
 
-void Dire::SaveUserData() {
+void Dire::SaveUserData() const {
     if (arr_settings[3]) {
         std::string str_temp_saveread = "";
         str_temp_saveread.append("Users_Data/" + login + "_data.bin");
@@ -97,21 +97,20 @@ void Dire::SaveUserData() {
 
         if (!MainContacts.empty()) {
             GetExport_vector(name_out, MainContacts);
-            printloadbar(25);
         }
         name_out.close();
     }
 }
 
-bool Dire::SaveUserData(std::string& name) {
+bool Dire::SaveUserData(const std::string& name) const {
     std::string str_temp_saveread = "";
     str_temp_saveread.append(name + format_file);
     std::ofstream name_out(str_temp_saveread, std::ios::binary);
 
     if (!MainContacts.empty()) {
         GetExport_vector(name_out, MainContacts);
-        printloadbar(25);
         name_out.close();
+
         return true;
     }
     name_out.close();
@@ -138,7 +137,7 @@ void Dire::ReadUserData() {
     name_in.close();
 }
 
-bool Dire::ReadUserData(std::string& name) {
+bool Dire::ReadUserData(const std::string& name) {
     system("cls");
     std::string str_temp_saveread = "";
     str_temp_saveread.append(name + format_file);
@@ -163,10 +162,9 @@ bool Dire::ReadUserData(std::string& name) {
 
 ////////////Запись/Чтение логин и пароль (LoginSystem)////////////
 
-void LoginSystem::SaveDataBase() {
+void LoginSystem::SaveDataBase() const {
     std::ofstream login_data_out("DataBase/login_data.bin", std::ios::binary);
     GetExport_vector(login_data_out, UsersData);
-    UsersData[user_position].printloadbar(25);
     login_data_out.close();
 }
 

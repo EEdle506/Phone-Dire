@@ -8,7 +8,7 @@ LoginSystem::LoginSystem() {
     UsersData.push_back({});
 }
 
-void LoginSystem::DataBaseCleaner(size_t index) {
+void LoginSystem::DataBaseCleaner(const size_t& index) {
     UsersData.erase(UsersData.begin(), UsersData.begin() + index);
     if (!UsersData.empty()) {
         UsersData.erase(UsersData.begin() + 1, UsersData.end());
@@ -20,7 +20,7 @@ void LoginSystem::DataBaseCleaner(size_t index) {
     UsersData.shrink_to_fit();
 }
 
-void Dire::ChangeAccountPass(std::string& a, int choise) {
+void Dire::ChangeAccountPass(const std::string& a, const short& choise) {
     if (a.size() > 2) {
         switch (choise) {
         case 1:
@@ -39,21 +39,21 @@ void Dire::ChangeAccountPass(std::string& a, int choise) {
     }
 }
 
-bool Dire::CheckAccountLogin(std::string& a, std::string& b) {
+bool Dire::CheckAccountLogin(const std::string& a, const std::string& b) {
     if (login == a && password == b) {
         return true;
     }
     return false;
 }
 
-bool Dire::CheckAccountLogin(std::string& a) {
+bool Dire::CheckAccountLogin(const std::string& a) {
     if (login == a) {
         return true;
     }
     return false;
 }
 
-bool LoginSystem::SetPassToAccount(std::string& a, std::string& b, std::string& c) {
+bool LoginSystem::SetPassToAccount(const std::string& a, const std::string& b, const std::string& c) {
     system("cls");
 
     if (!a.empty() | !b.empty() | !c.empty()) {
@@ -106,7 +106,7 @@ bool LoginSystem::SetPassToAccount(std::string& a, std::string& b, std::string& 
     }
 }
 
-int LoginSystem::GetLoginToAccount(std::string& a, std::string& b) {
+int LoginSystem::GetLoginToAccount(const std::string& a, const std::string& b) {
     system("cls");
     bad_position = 0; user_position = 0;
     //Пошук аккаунта
@@ -149,7 +149,7 @@ int LoginSystem::GetLoginToAccount(std::string& a, std::string& b) {
     }
 }
 
-void LoginSystem::GetChangeAccount(short choise) {
+void LoginSystem::GetChangeAccount(const short& choise) {
     if (choise <= 2) {
         std::string temp_login = UsersData[user_position].login, old_name_file = "", str_temp_phonedire = "", new_name_file = "";
         
