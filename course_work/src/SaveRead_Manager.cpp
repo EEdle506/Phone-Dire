@@ -63,7 +63,7 @@ void Dire::ReadUserSettings() {
     if (in.is_open()) {
         while (!in.eof()) {
             in >> arr_settings[i];
-            i++;
+            ++i;
         }
         in.close();
     }
@@ -95,9 +95,8 @@ void Dire::SaveUserData() const {
         str_temp_saveread.append("Users_Data/" + login + "_data.bin");
         std::ofstream name_out(str_temp_saveread, std::ios::binary);
 
-        if (!MainContacts.empty()) {
+        if (!MainContacts.empty())
             GetExport_vector(name_out, MainContacts);
-        }
         name_out.close();
     }
 }
@@ -131,7 +130,7 @@ void Dire::ReadUserData() {
     else {
         system("cls");
         ChangeColour(Yellow);
-        std::cout << Language[10];
+        std::cout << Language.at(10);
         Sleep(arr_settings[0]);
     }
     name_in.close();
@@ -152,7 +151,7 @@ bool Dire::ReadUserData(const std::string& name) {
         }
     else {
         ChangeColour(Yellow);
-        std::cout << Language[10];
+        std::cout << Language.at(10);
         Sleep(arr_settings[0]);
         system("cls");
     }
@@ -175,7 +174,7 @@ void LoginSystem::ReadDataBase() {
         if (UsersData.empty())
             UsersData.push_back({});
         UsersData.shrink_to_fit();
-        UsersData[user_position].printloadbar(24);
+        UsersData.at(user_position).printloadbar(24);
     }
     login_data_in.close();
 }

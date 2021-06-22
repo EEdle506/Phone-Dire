@@ -9,10 +9,10 @@
 #include <Windows.h>
 
 template <typename T>
-void GetExport_vector(std::ofstream& out, const std::vector<T>& ex_data);
+void GetExport_vector(std::ofstream& out, const std::unique_ptr<std::vector<T>>& ex_data);
 
 template <typename T>
-void GetImport_vector(std::ifstream& in, std::vector<T>& im_data);
+void GetImport_vector(std::ifstream& in, std::unique_ptr<std::vector<T>>& im_data);
 
 /////////////////////////////////////////////////////
 
@@ -30,14 +30,10 @@ enum ColoursType {
 
 struct Contact {
 
-    Contact() {
-        nick = "Unknown_name";
-        phone = "Unknown_phone";
-    }
+    Contact() = default;
 
     Contact(std::string&& nick, std::string&& phone);
-
-    Contact(std::string& nick, std::string& phone);
+    Contact(std::string &nick, std::string &phone);
 
     //Запись nick, phone
     void WriteUnfUserData(std::ofstream& out) const;
@@ -60,6 +56,7 @@ struct Dire {
     Dire(const std::string& login, const std::string& password);
 
     std::vector<Contact> MainContacts;
+
     std::vector<std::string> Language;
 
     std::string login, format_file = ".bin";
@@ -70,7 +67,7 @@ private:
     bool auto_save, exec_bar; 
 public:
 
-    int arr_settings[7]{ delay_text, delay_load, exec_bar, auto_save, lang_choise, lang_state, format_type };
+    short arr_settings[7]{ delay_text, delay_load, exec_bar, auto_save, lang_choise, lang_state, format_type };
 
     //
     void WriteUnfUserData(std::ofstream& out) const;
@@ -86,7 +83,6 @@ public:
 
     // 
     bool SaveUserData(const std::string& name) const;
-
     bool ReadUserData(const std::string& name);
 
     ////////////////////////////////////////////Завантаження конфігу налаштувань//////////////////////////////////////////////
@@ -101,10 +97,12 @@ public:
     //////////////////////////////////////////Перевірка логіна та пароля////////////////////////////////////////////////
 
     //Проверка на существование login, password.
-    bool CheckAccountLogin(const std::string& a, const std::string& b);
-    bool CheckAccountLogin(const std::string& a);
+    bool CheckAccountLogin(const std::string& a, const std::string& b)noexcept;
+    bool CheckAccountLogin(const std::string& a)noexcept;
 
     /////////////////////////////////////////Налаштування книги//////////////////////////////////
+
+    static void LangLoad(std::vector<std::string>& Language, const short& index);
 
     //Зміна мови
     void SwitchLanguage(const short& choise, bool check_state);
@@ -113,16 +111,13 @@ public:
     void FileNameFormat(const short& choise);
 
     //Ставить затримку вивода тексту.
-    int SetDelay(const short& choise);
+    short SetDelay(const short& choise);
 
     //Вивід меню завантаження.
     void printloadbar(const short& index_lang);
 
     //Функція вімкнення та вимикання меню завантаження
     void SetLoad(const short& choise);
-
-    //Надає можливість користувачу вводити n кількість згенерованих контактів.
-    void MassiveAdd(const size_t& amount);
 
     //Вмткає / вимикає автоматичне збереження
     void AutoSave(const short& choise);
@@ -149,6 +144,8 @@ public:
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //static void CheckState_Dire();
+
     void ReadUserData();
 
 protected:
@@ -162,6 +159,7 @@ protected:
 
 public:
     ~Dire();
+
 };
 
 /////////////////////////////////////////////////////
@@ -172,7 +170,7 @@ struct LoginSystem {
     LoginSystem();
 
     std::vector<Dire> UsersData;
-    size_t user_position = 0;
+    unsigned int user_position = 0;
 
     //Додає аккаунт в UsersData
     bool SetPassToAccount(const std::string& a, const std::string& b, const std::string& c);
@@ -188,6 +186,7 @@ struct LoginSystem {
     void GetDeleteAccount();
 
 private:
+
     //Зберігає UsersData у файл логін та пароль
     void SaveDataBase() const;
 
@@ -202,17 +201,17 @@ public:
 
 /////////////////////////////////////////////////////
 
+void GetExport_string(std::ofstream& out, const std::string& str);
+std::string GetImport_string(std::ifstream& in, std::string& str);
+
 //Считует нажатие клавиш
 int GetKey();
 
 //Функция для смены цвета в консоли
 void ChangeColour(int colour);
 
-void GetExport_string(std::ofstream& out, const std::string& str);
-
-std::string GetImport_string(std::ifstream& in, std::string& str);
-
-void LangLoad(std::vector<std::string>& language, const short &index);
+//Надає можливість користувачу вводити n кількість згенерованих контактів.
+void MassiveAdd(LoginSystem& contacts, const size_t& position, const size_t& amount);
 
 /////////////////////////////////////////////////////
 
@@ -222,8 +221,8 @@ void GetExport_vector(std::ofstream &out, const std::vector<T>& ex_data) {
     size_t n = ex_data.size();
     out.write((char*)&n, sizeof(n));
 
-    for (int i = 0; i < n; i++)
-        ex_data[i].WriteUnfUserData(out);
+    for (int i = 0; i < n; ++i)
+        ex_data.at(i).WriteUnfUserData(out);
 }
 
 //Шаблонна функція читання із файла у string (шаблон типа Dire, Contact, LoginSystem)
@@ -236,7 +235,7 @@ void GetImport_vector(std::ifstream& in, std::vector<T>& im_data) {
     im_data.clear();
     im_data.reserve(size_vec);
 
-    for (int i = 0; i < size_vec; i++) {
+    for (int i = 0; i < size_vec; ++i) {
         data_contacts.ReadUnfUserData(in);
         im_data.push_back(data_contacts);
     }
