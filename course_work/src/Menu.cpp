@@ -17,26 +17,26 @@ void GetLoginMenu() {
 
 	while (true) {
 		std::string UsersLog = "", UsersPass = "", ContName = "";
-		system(Dire.UsersData.at(Dire.user_position).Language.at(95).c_str());
+		system(Dire.UsersData.at(Dire.pos).Language.at(95).c_str());
 		system("cls");
 		ChangeColour(White);
-		std::cout << Dire.UsersData.at(Dire.user_position).Language.at(76);
-		if (_getch() == 27) { Dire.UsersData.at(Dire.user_position).printloadbar(26); break; }
+		std::cout << Dire.UsersData.at(Dire.pos).Language.at(76);
+		if (_getch() == 27) { Dire.UsersData.at(Dire.pos).printloadbar(26); break; }
 
 		switch (GetKey()) {
 		case 1:																		//log in
 
-			Dire.UsersData.at(Dire.user_position).printloadbar(63);
-			system(Dire.UsersData.at(Dire.user_position).Language.at(108).c_str());
+			Dire.UsersData.at(Dire.pos).printloadbar(63);
+			system(Dire.UsersData.at(Dire.pos).Language.at(108).c_str());
 			system("cls");
 
-			std::cout << Dire.UsersData.at(Dire.user_position).Language.at(77)
-			<< Dire.UsersData.at(Dire.user_position).Language.at(81);
+			std::cout << Dire.UsersData.at(Dire.pos).Language.at(77)
+			<< Dire.UsersData.at(Dire.pos).Language.at(81);
 
-			if (_getch() == 27) { Dire.UsersData.at(Dire.user_position).printloadbar(26); continue; }
+			if (_getch() == 27) { Dire.UsersData.at(Dire.pos).printloadbar(26); continue; }
 
 			getline(std::cin, UsersLog);
-			std::cout << Dire.UsersData.at(Dire.user_position).Language.at(82);
+			std::cout << Dire.UsersData.at(Dire.pos).Language.at(82);
 			getline(std::cin, UsersPass);
 
 			GetDireMainMenu(Dire.GetLoginToAccount(UsersLog, UsersPass));
@@ -45,20 +45,20 @@ void GetLoginMenu() {
 
 		case 2:																		//sign in
 
-			Dire.UsersData.at(Dire.user_position).printloadbar(63);
-			system(Dire.UsersData.at(Dire.user_position).Language.at(109).c_str());
+			Dire.UsersData.at(Dire.pos).printloadbar(63);
+			system(Dire.UsersData.at(Dire.pos).Language.at(109).c_str());
 			system("cls");
 
-			std::cout << Dire.UsersData.at(Dire.user_position).Language.at(78)
-			<< Dire.UsersData.at(Dire.user_position).Language.at(81);
+			std::cout << Dire.UsersData.at(Dire.pos).Language.at(78)
+			<< Dire.UsersData.at(Dire.pos).Language.at(81);
 			
-			if (_getch() == 27) { Dire.UsersData.at(Dire.user_position).printloadbar(26); continue; }
+			if (_getch() == 27) { Dire.UsersData.at(Dire.pos).printloadbar(26); continue; }
 			
 			getline(std::cin, UsersLog);
-			std::cout << Dire.UsersData.at(Dire.user_position).Language.at(82);
+			std::cout << Dire.UsersData.at(Dire.pos).Language.at(82);
 			getline(std::cin, UsersPass);
 			system("cls");
-			std::cout << Dire.UsersData.at(Dire.user_position).Language.at(93);
+			std::cout << Dire.UsersData.at(Dire.pos).Language.at(93);
 			getline(std::cin, ContName);
 
 			if (Dire.SetPassToAccount(UsersLog, UsersPass, ContName)) continue;
@@ -66,27 +66,27 @@ void GetLoginMenu() {
 			continue;
 
 		case 3:																		//change log/pass
-			Dire.UsersData.at(Dire.user_position).printloadbar(63);
+			Dire.UsersData.at(Dire.pos).printloadbar(63);
 
-			system(Dire.UsersData.at(Dire.user_position).Language.at(110).c_str());
+			system(Dire.UsersData.at(Dire.pos).Language.at(110).c_str());
 			system("cls");
 
-			std::cout << Dire.UsersData.at(Dire.user_position).Language.at(80);
-			std::cout << Dire.UsersData.at(Dire.user_position).Language.at(81);
+			std::cout << Dire.UsersData.at(Dire.pos).Language.at(80);
+			std::cout << Dire.UsersData.at(Dire.pos).Language.at(81);
 			
-			if (_getch() == 27) { Dire.UsersData.at(Dire.user_position).printloadbar(26); continue; }
+			if (_getch() == 27) { Dire.UsersData.at(Dire.pos).printloadbar(26); continue; }
 
 			getline(std::cin, UsersLog);
-			std::cout << Dire.UsersData.at(Dire.user_position).Language.at(82);
+			std::cout << Dire.UsersData.at(Dire.pos).Language.at(82);
 			getline(std::cin, UsersPass);
 
 			if (Dire.GetLoginToAccount(UsersLog, UsersPass) < Dire.UsersData.size()) {
-				Dire.UsersData.at(Dire.user_position).printloadbar(63);
+				Dire.UsersData.at(Dire.pos).printloadbar(63);
 				system("cls");
 				ChangeColour(White);
-				std::cout << Dire.UsersData.at(Dire.user_position).Language.at(79);
+				std::cout << Dire.UsersData.at(Dire.pos).Language.at(79);
 
-				if (_getch() == 27) { Dire.UsersData.at(Dire.user_position).printloadbar(26); continue; }
+				if (_getch() == 27) { Dire.UsersData.at(Dire.pos).printloadbar(26); continue; }
 
 				Dire.GetChangeAccount(GetKey());
 			}
@@ -94,27 +94,27 @@ void GetLoginMenu() {
 			continue;
 
 		case 4:																					//delete account
-			Dire.UsersData.at(Dire.user_position).printloadbar(63);
+			Dire.UsersData.at(Dire.pos).printloadbar(63);
 
-			system(Dire.UsersData.at(Dire.user_position).Language.at(111).c_str());
+			system(Dire.UsersData.at(Dire.pos).Language.at(111).c_str());
 
 			system("cls");
-			std::cout << Dire.UsersData.at(Dire.user_position).Language.at(85)
-			<< Dire.UsersData.at(Dire.user_position).Language.at(81);
+			std::cout << Dire.UsersData.at(Dire.pos).Language.at(85)
+			<< Dire.UsersData.at(Dire.pos).Language.at(81);
 
-			if (_getch() == 27) { Dire.UsersData.at(Dire.user_position).printloadbar(26); continue; }
+			if (_getch() == 27) { Dire.UsersData.at(Dire.pos).printloadbar(26); continue; }
 
 			getline(std::cin, UsersLog);
-			std::cout << Dire.UsersData.at(Dire.user_position).Language.at(82);
+			std::cout << Dire.UsersData.at(Dire.pos).Language.at(82);
 			getline(std::cin, UsersPass);
 
 			if (Dire.GetLoginToAccount(UsersLog, UsersPass) < Dire.UsersData.size()) {
-				Dire.UsersData.at(Dire.user_position).printloadbar(63);
+				Dire.UsersData.at(Dire.pos).printloadbar(63);
 				system("cls");
 				ChangeColour(White);
-				std::cout << Dire.UsersData.at(Dire.user_position).Language.at(86);
+				std::cout << Dire.UsersData.at(Dire.pos).Language.at(86);
 
-				if (_getch() == 27) { Dire.UsersData.at(Dire.user_position).printloadbar(26); continue; }
+				if (_getch() == 27) { Dire.UsersData.at(Dire.pos).printloadbar(26); continue; }
 
 				switch (GetKey()) {
 				case 1:
@@ -125,7 +125,7 @@ void GetLoginMenu() {
 
 				case 2:
 
-					Dire.UsersData.at(Dire.user_position).printloadbar(26);
+					Dire.UsersData.at(Dire.pos).printloadbar(26);
 					system("cls");
 
 					continue;
@@ -134,7 +134,7 @@ void GetLoginMenu() {
 
 					system("cls");
 					ChangeColour(Yellow);
-					std::cout << Dire.UsersData.at(Dire.user_position).Language.at(2);
+					std::cout << Dire.UsersData.at(Dire.pos).Language.at(2);
 					Sleep(delay1_text);
 
 					continue;
@@ -144,29 +144,29 @@ void GetLoginMenu() {
 			continue;
 
 		case 5:																					//change language
-			Dire.UsersData.at(Dire.user_position).printloadbar(63);
-			system(Dire.UsersData.at(Dire.user_position).Language.at(98).c_str());
+			Dire.UsersData.at(Dire.pos).printloadbar(63);
+			system(Dire.UsersData.at(Dire.pos).Language.at(98).c_str());
 			system("cls");
 
-			std::cout << Dire.UsersData.at(Dire.user_position).Language.at(43);
+			std::cout << Dire.UsersData.at(Dire.pos).Language.at(43);
 
-			if (_getch() == 27) { Dire.UsersData.at(Dire.user_position).printloadbar(26); continue; }
+			if (_getch() == 27) { Dire.UsersData.at(Dire.pos).printloadbar(26); continue; }
 
-			Dire.UsersData.at(Dire.user_position).SwitchLanguage(GetKey(), true);
+			Dire.UsersData.at(Dire.pos).SwitchLanguage(GetKey(), true);
 
 			continue;
 
 		case 6:
 
-			Dire.UsersData.at(Dire.user_position).printloadbar(26);
+			Dire.UsersData.at(Dire.pos).printloadbar(26);
 			system("cls");
 			break;
 
 		default:
-			Dire.UsersData.at(Dire.user_position).printloadbar(63);
+			Dire.UsersData.at(Dire.pos).printloadbar(63);
 			system("cls");
 			ChangeColour(Yellow);
-			std::cout << Dire.UsersData.at(Dire.user_position).Language.at(2);
+			std::cout << Dire.UsersData.at(Dire.pos).Language.at(2);
 			Sleep(delay1_text);
 
 			continue;
@@ -276,7 +276,6 @@ void GetDireMainMenu(const size_t index) {
 			}
 			break;
 		}
-		
 	}
 }
 
@@ -502,7 +501,7 @@ void GetSettings(const size_t index) {
 	Dire.UsersData.at(index).SaveUserSettings();
 }
 
-void ContactPrefs(const size_t index, const size_t contact) {
+void ContactPrefs(const size_t index, const size_t& contact) {
 	if (contact > Dire.UsersData.at(index).MainContacts.size());
 	else {
 		if (!Dire.UsersData.at(index).MainContacts.empty()) {

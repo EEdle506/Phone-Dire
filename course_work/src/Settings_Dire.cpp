@@ -83,6 +83,7 @@ short Dire::SetDelay(const short& choise) {
 }
 
 void Dire::printloadbar(const short &index_lang) {
+    setlocale(LC_ALL, "ru");
     std::string a = "title " + Language.at(index_lang);
     a.append(" [");
     for (int i = 0; i < 7; ++i) {

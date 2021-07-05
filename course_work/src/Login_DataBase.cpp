@@ -1,6 +1,6 @@
-#include "Dire.h"
+п»ї#include "Dire.h"
 
-///////////////////Система логина(PhoneDire)////////////////////////////
+///////////////////Г‘ГЁГ±ГІГҐГ¬Г  Г«Г®ГЈГЁГ­Г (PhoneDire)////////////////////////////
 
 LoginSystem::LoginSystem() {
     UsersData.push_back({});
@@ -10,26 +10,19 @@ void LoginSystem::DataBaseCleaner(const size_t& index) {
     UsersData.erase(UsersData.begin(), UsersData.begin() + index);
     if (!UsersData.empty()) {
         UsersData.erase(++UsersData.begin(), UsersData.end());
-        user_position = UsersData.size()-1;
-        if (UsersData.
-            
-            empty())
+        if (UsersData.empty())
             UsersData.push_back({});
     }
     UsersData.shrink_to_fit();
+    user_position = static_cast<unsigned int>(UsersData.size() - 1);
 }
 
-void Dire::ChangeAccountPass(const std::string& a, const short& choise) {
-    if (a.size() > 2) {
+void Dire::ChangeAccountPass(const std::string& login, const short& choise) {
+    if (login.size() > 2)
         switch (choise) {
-        case 1:
-            this->login = a;
-            break;
-        case 2:
-            this->password = a;
-            break;
+        case 1: this->login = login; break;
+        case 2: this->password = login; break;
         }
-    }
     else {
         system("cls");
         ChangeColour(LightRed);
@@ -38,8 +31,8 @@ void Dire::ChangeAccountPass(const std::string& a, const short& choise) {
     }
 }
 
-bool Dire::CheckAccountLogin(const std::string& a, const std::string& b) noexcept {
-    if (login == a && password == b)
+bool Dire::CheckAccountLogin(const std::string& login, const std::string& password) noexcept {
+    if (this->login == login && this->password == password)
         return true;
     return false;
 }
@@ -55,11 +48,11 @@ bool LoginSystem::SetPassToAccount(const std::string& a, const std::string& b, c
 
     if (!a.empty() | !b.empty() | !c.empty()) {
         if (b==c) {
-            if (a.size() > 2 && b.size() > 1) {
+            if (a.size() > 2 && b.size() > 3) {
                 ReadDataBase();
-                //Проверка на существование аккаунта
-                for (size_t i = 0; i < UsersData.size(); ++i) {
-                    if (UsersData.at(i).CheckAccountLogin(a, b)) {
+                //РџРѕРёСЃРє РїРѕ Р±Р°Р·Рµ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёР№ Р°РєРєР°СѓРЅС‚
+                for (size_t i = 0;i<UsersData.size();++i) {
+                    if (UsersData.at(i).CheckAccountLogin(a)) {
                         ChangeColour(Yellow);
                         std::cout << UsersData.at(i).Language.at(75);
                         Sleep(UsersData.at(i).arr_settings[0]);
@@ -68,11 +61,14 @@ bool LoginSystem::SetPassToAccount(const std::string& a, const std::string& b, c
                         return false;
                     }
                 }
+
                 UsersData.push_back(Dire(a,b));
-                user_position = UsersData.size() - 1;
+                user_position = static_cast<unsigned int>(UsersData.size() - 1);
+
                 UsersData.at(user_position).printloadbar(18);
                 std::cout << UsersData.at(user_position).Language.at(71);
                 Sleep(UsersData.at(user_position).arr_settings[0]);
+                
                 SaveDataBase();
                 DataBaseCleaner(user_position);
 
@@ -105,47 +101,32 @@ bool LoginSystem::SetPassToAccount(const std::string& a, const std::string& b, c
 
 int LoginSystem::GetLoginToAccount(const std::string& a, const std::string& b) {
     system("cls");
-    unsigned int bad_position = 0; user_position = 0;
 
-    //Пошук аккаунта
-
+    //ГЏГ®ГёГіГЄ Г ГЄГЄГ ГіГ­ГІГ 
     ReadDataBase();
-    if (!UsersData.empty()) {
-        if (!a.empty() | !b.empty()) {
-            for (size_t i = 0; i < UsersData.size(); ++i) {
-                if (UsersData.at(i).CheckAccountLogin(a, b)) {
-                    DataBaseCleaner(i);
-                    ChangeColour(LightGreen);
-                    std::cout << UsersData.at(user_position).Language.at(72);
-                    Sleep(UsersData.at(user_position).arr_settings[0]);
-                    return user_position;
-                }
+
+    if (!a.empty() | !b.empty())
+        for (size_t i = 0; i < UsersData.size(); ++i) {
+            if (UsersData.at(i).CheckAccountLogin(a, b)) {
+                DataBaseCleaner(i);
+
+                ChangeColour(LightGreen);
+                std::cout << UsersData.at(user_position).Language.at(72);
+                Sleep(UsersData.at(user_position).arr_settings[0]);
+
+                return user_position;
             }
         }
-        //Аккаунт не знайдено
-        user_position = UsersData.size() - 1;
-        DataBaseCleaner(user_position);
-        ChangeColour(LightRed);
-        std::cout << UsersData.at(user_position).Language.at(73);
-        Sleep(UsersData.at(user_position).arr_settings[0]);
-        system("cls");
-        std::cout << UsersData.at(user_position).Language.at(74);
-        Sleep(UsersData.at(user_position).arr_settings[0]);
-        system("cls");
-        bad_position = UsersData.size() + 2;
 
-        return bad_position;
-    }
-    else {
-        UsersData.push_back({});
-        ChangeColour(LightRed);
-        std::cout << UsersData.at(user_position).Language.at(73);
-        Sleep(UsersData.at(user_position).arr_settings[0]);
-        system("cls");
-        bad_position = UsersData.size() + 2;
-        
-        return bad_position;
-    }
+    //ГЂГЄГЄГ ГіГ­ГІ Г­ГҐ Г§Г­Г Г©Г¤ГҐГ­Г®
+    DataBaseCleaner(user_position);
+
+    ChangeColour(LightRed); 
+    std::cout << UsersData.at(user_position).Language.at(73);
+    Sleep(UsersData.at(user_position).arr_settings[0]);
+    system("cls");
+
+    return static_cast<int>(UsersData.size() * 2 + 1);
 }
 
 void LoginSystem::GetChangeAccount(const short& choise) {
@@ -199,7 +180,6 @@ void LoginSystem::GetChangeAccount(const short& choise) {
 }
 
 void LoginSystem::GetDeleteAccount() {
-    system("cls");
     std::string str_temp_phonedire = "", temp_login = UsersData.at(user_position).login;
     str_temp_phonedire.append("Users_Data/" + UsersData.at(user_position).login + "_data.bin");
 
@@ -213,6 +193,7 @@ void LoginSystem::GetDeleteAccount() {
     }
 
     if (user_position < UsersData.size()) {
+        system("cls");
         remove(str_temp_phonedire.c_str());
 
         UsersData.erase(UsersData.begin() + user_position);
@@ -221,23 +202,18 @@ void LoginSystem::GetDeleteAccount() {
         if (!UsersData.empty()) {
             user_position = 0;
             SaveDataBase();
-
             UsersData.clear();
             UsersData.push_back({});
-
-            UsersData.at(user_position).printloadbar(19);
-            ChangeColour(LightGreen);
-            std::cout << UsersData.at(user_position).Language.at(88);
-            Sleep(UsersData.at(user_position).arr_settings[0]);
         }
         else {
             UsersData.push_back({});
             SaveDataBase();
-            UsersData.at(user_position).printloadbar(19);
-            ChangeColour(LightGreen);
-            std::cout << UsersData.at(user_position).Language.at(88);
-            Sleep(UsersData.at(user_position).arr_settings[0]);
         }
+
+        UsersData.at(user_position).printloadbar(19);
+        ChangeColour(LightGreen);
+        std::cout << UsersData.at(user_position).Language.at(88);
+        Sleep(UsersData.at(user_position).arr_settings[0]);
     }
 }
 

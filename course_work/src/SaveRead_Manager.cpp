@@ -177,6 +177,8 @@ void LoginSystem::ReadDataBase() {
         UsersData.at(user_position).printloadbar(24);
     }
     login_data_in.close();
+
+    user_position = static_cast<unsigned int>(UsersData.size() - 1);
 }
 
 //////////////////////////////////////////////////////////////////

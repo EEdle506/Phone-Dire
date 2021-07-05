@@ -97,8 +97,8 @@ public:
     //////////////////////////////////////////Перевірка логіна та пароля////////////////////////////////////////////////
 
     //Проверка на существование login, password.
-    bool CheckAccountLogin(const std::string& a, const std::string& b)noexcept;
-    bool CheckAccountLogin(const std::string& a)noexcept;
+    bool CheckAccountLogin(const std::string& a, const std::string& b) noexcept;
+    bool CheckAccountLogin(const std::string& a) noexcept;
 
     /////////////////////////////////////////Налаштування книги//////////////////////////////////
 
@@ -170,8 +170,12 @@ struct LoginSystem {
     LoginSystem();
 
     std::vector<Dire> UsersData;
-    unsigned int user_position = 0;
 
+    static const int pos = 0;
+
+private:
+    unsigned int user_position = 0;
+public:
     //Додає аккаунт в UsersData
     bool SetPassToAccount(const std::string& a, const std::string& b, const std::string& c);
 
