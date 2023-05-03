@@ -4,7 +4,7 @@ An application that designed to store contacts and have multiple accounts in pro
 # List all contacts
 ![список](https://user-images.githubusercontent.com/83777873/235959595-f540764b-b9c3-4171-b653-ea80d7c78672.gif)
 
-#Renaming contacts
+# Renaming contacts
 ![rename](https://user-images.githubusercontent.com/83777873/235959564-0045c6a4-9089-43e9-89b6-6a4aa5d011d1.gif)
 
 # Removing contacts
